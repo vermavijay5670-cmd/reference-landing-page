@@ -1,0 +1,6 @@
+# Storefront roadmap
+
+- [ ] Build the responsive vegetable and spice storefront on `/` using real Shopify products and Storefront API cart checkout.
+- [ ] Add an internal product detail route and accurate page metadata.
+- [ ] Add a secure Shopify order webhook that can send a minimal Telegram order notice when the owner finishes configuration.
+- [ ] Run project tests and verify the public storefront in the preview.
