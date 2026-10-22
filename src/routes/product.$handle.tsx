@@ -21,10 +21,12 @@ export const Route = createFileRoute("/product/$handle")({
   head: ({ loaderData }) => {
     const title = loaderData ? `${loaderData.title} | Sabzi & Spice` : "Product unavailable | Sabzi & Spice";
     const description = loaderData?.description || "Explore vegetables and spices at Sabzi & Spice.";
+    const imageUrl = loaderData?.images.edges[0]?.node.url;
     return { meta: [
       { title }, { name: "description", content: description },
       { property: "og:title", content: title }, { property: "og:description", content: description },
       { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" },
+      ...(imageUrl ? [{ property: "og:image", content: imageUrl }, { name: "twitter:image", content: imageUrl }] : []),
     ] };
   },
   component: ProductPage,

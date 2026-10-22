@@ -99,7 +99,7 @@ function CartSheet({ itemCount }: { itemCount: number }) {
   );
 }
 
-export function ProductCard({ product }: { product: ShopifyProduct }) {
+export function ProductCard({ product, inverse = false }: { product: ShopifyProduct; inverse?: boolean }) {
   const variant = product.variants.edges.map((edge) => edge.node).find((item) => item.availableForSale);
   const addItem = useCartStore((state) => state.addItem);
   const isLoading = useCartStore((state) => state.isLoading);
@@ -116,9 +116,9 @@ export function ProductCard({ product }: { product: ShopifyProduct }) {
     }
   };
 
-  return <article className="group min-w-0">
-    <Link to="/product/$handle" params={{ handle: product.handle }} className="block"><div className="aspect-[4/5] overflow-hidden rounded-sm bg-secondary">{image ? <img className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" src={image.url} alt={image.altText ?? product.title} loading="lazy" /> : <div className="grid size-full place-items-center text-muted-foreground"><ShoppingBag aria-hidden="true" /></div>}</div><div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 pt-3"><h3 className="min-w-0 text-sm font-medium sm:text-base">{product.title}</h3><p className="shrink-0 text-sm text-muted-foreground">{formatShopifyMoney(product.priceRange.minVariantPrice)}</p></div></Link>
-    <Button className="mt-3 w-full" variant="outline" size="sm" disabled={!variant || isLoading} onClick={() => void addToBag()}>{variant ? (isLoading ? "Adding…" : "Add to bag") : "Sold out"}</Button>
+  return <article className={`group min-w-0 ${inverse ? "text-background" : ""}`}>
+    <Link to="/product/$handle" params={{ handle: product.handle }} className="block"><div className="aspect-[4/5] overflow-hidden rounded-sm bg-secondary">{image ? <img className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" src={image.url} alt={image.altText ?? product.title} loading="lazy" /> : <div className="grid size-full place-items-center text-muted-foreground"><ShoppingBag aria-hidden="true" /></div>}</div><div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 pt-3"><h3 className="min-w-0 text-sm font-medium sm:text-base">{product.title}</h3><p className={`shrink-0 text-sm ${inverse ? "text-background/70" : "text-muted-foreground"}`}>{formatShopifyMoney(product.priceRange.minVariantPrice)}</p></div></Link>
+    <Button className="mt-3 w-full" variant={inverse ? "secondary" : "outline"} size="sm" disabled={!variant || isLoading} onClick={() => void addToBag()}>{variant ? (isLoading ? "Adding…" : "Add to bag") : "Sold out"}</Button>
     {error ? <p role="alert" className="mt-2 text-xs text-destructive">{error}</p> : null}
   </article>;
 }
