@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep shared storefront navigation, Shopify product cards, and persisted cart presentation in `src/components/storefront.tsx` so home and product pages use one consistent buying flow.
